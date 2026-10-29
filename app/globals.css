@@ -1,26 +1,222 @@
 @import "tailwindcss";
 
+/* -------------------------------------------------------------------------- */
+/* Design tokens                                                              */
+/* -------------------------------------------------------------------------- */
+
+@theme {
+  /* Deep navy – structure, dark sections, headings */
+  --color-navy-950: #0a1c2e;
+  --color-navy-900: #102a43;
+  --color-navy-800: #173a5c;
+  --color-navy-700: #1f4a75;
+  --color-navy-300: #9db4cb;
+  --color-navy-200: #c3d3e2;
+
+  /* Primary blue – links, interactive accents */
+  --color-brand-700: #125a91;
+  --color-brand-600: #1769aa;
+  --color-brand-500: #2c83c6;
+  --color-brand-100: #dbeaf6;
+  --color-brand-50: #eef5fb;
+
+  /* Teal accent – supporting highlights (use -700 for text on light) */
+  --color-aqua-600: #20a39e;
+  --color-aqua-700: #167a76;
+  --color-aqua-100: #d8f0ee;
+
+  /* Warm accent – reserved for call-to-action buttons */
+  --color-sun-400: #f4b942;
+  --color-sun-300: #f8cd75;
+  --color-sun-100: #fdf0d3;
+
+  /* Neutrals */
+  --color-ink: #172b3a;
+  --color-muted: #55657a;
+  --color-line: #e2e8f0;
+  --color-paper: #f4f7fa;
+
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-heading), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+
+  --shadow-lift: 0 1px 2px rgb(16 42 67 / 0.06), 0 8px 24px rgb(16 42 67 / 0.08);
+
+  --animate-rise: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Base                                                                       */
+/* -------------------------------------------------------------------------- */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 6rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #fff;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.65;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  color: var(--color-navy-900);
+  letter-spacing: -0.02em;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-brand-600);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.on-dark :focus-visible {
+  outline-color: var(--color-sun-400);
+}
+
+::selection {
+  background: var(--color-sun-300);
+  color: var(--color-navy-900);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Utilities                                                                  */
+/* -------------------------------------------------------------------------- */
+
+@utility container-page {
+  width: 100%;
+  max-width: 76rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+  @media (min-width: 640px) {
+    padding-inline: 1.5rem;
+  }
+  @media (min-width: 1024px) {
+    padding-inline: 2rem;
+  }
+}
+
+@utility section-y {
+  padding-block: 4rem;
+  @media (min-width: 1024px) {
+    padding-block: 6rem;
+  }
+}
+
+@utility eyebrow {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-aqua-700);
+}
+
+@utility h-display {
+  font-size: clamp(2.5rem, 1.6rem + 4vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+}
+
+@utility h-section {
+  font-size: clamp(1.875rem, 1.4rem + 2vw, 2.875rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+@utility prose-copy {
+  max-width: 42rem;
+  color: var(--color-ink);
+  & > * + * {
+    margin-top: 1.1em;
+  }
+  & h2 {
+    font-size: 1.75rem;
+    font-weight: 800;
+    margin-top: 2.25em;
+  }
+  & h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-top: 1.75em;
+  }
+  & ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+  }
+  & ol {
+    list-style: decimal;
+    padding-left: 1.25rem;
+  }
+  & li + li {
+    margin-top: 0.4em;
+  }
+  & a {
+    color: var(--color-brand-600);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  & a:hover {
+    color: var(--color-brand-700);
+  }
+}
+
+/* Native <details> accordion marker removal */
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+details[open] > summary .chev {
+  transform: rotate(180deg);
 }
