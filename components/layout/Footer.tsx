@@ -102,18 +102,6 @@ export function Footer() {
             and the insurer&rsquo;s underwriting, and product availability may
             vary by state.
           </p>
-          <p>
-            <span className="font-semibold text-white">Business: </span>
-            {business.legalName ?? <Placeholder>Legal business name</Placeholder>}
-            {" · "}
-            <span className="font-semibold text-white">Licensing: </span>
-            {business.licensing ?? (
-              <Placeholder>Agency license details</Placeholder>
-            )}
-            {" · "}
-            <span className="font-semibold text-white">Licensed in: </span>
-            {business.licensedStates ?? <Placeholder>Licensed states</Placeholder>}
-          </p>
           <div className="flex flex-col gap-4 border-t border-white/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
             <p>
               &copy; {brand.copyrightYear} {brand.name}. All rights reserved.

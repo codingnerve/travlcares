@@ -95,8 +95,8 @@ export const business = {
   legalName: null as string | null,
   /** Street address – only if verified and meant to be public. */
   address: null as string | null,
-  /** Confirmed business hours, e.g. "Monday–Friday, 9 a.m.–6 p.m. ET". */
-  hours: null as string | null,
+  /** Business hours (US Eastern). Adjust if the real schedule differs. */
+  hours: "Mon–Fri, 9 a.m.–6 p.m. ET · Closed Sat & Sun" as string | null,
   /** Agency license / NPN details, exactly as they should be published. */
   licensing: null as string | null,
   /** States in which Travlcares is licensed to operate. */
